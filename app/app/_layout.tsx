@@ -1,8 +1,3 @@
-import {
-  DarkTheme,
-  DefaultTheme,
-  ThemeProvider,
-} from "@react-navigation/native";
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import * as SplashScreen from "expo-splash-screen";
@@ -10,7 +5,8 @@ import { PropsWithChildren, useEffect } from "react";
 import Constants from "expo-constants";
 import "react-native-reanimated";
 
-import { useColorScheme } from "@/hooks/useColorScheme";
+import { GluestackUIProvider } from "@gluestack-ui/themed";
+import { extendedThemeConfig } from "@/theme/gluestack-ui.config";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -23,7 +19,7 @@ function Wrapper({ children }: PropsWithChildren) {
     SofiaPro_700Bold: require("../assets/fonts/Sofia-Pro-Bold-Az.otf"),
     SofiaPro_600SemiBold: require("../assets/fonts/Sofia-Pro-Semi-Bold-Az.otf"),
     SofiaPro_900Black: require("../assets/fonts/Sofia-Pro-Black-Az.otf"),
-    SofiaPro_300Light: require("../assets/fonts/Sofia-Pro-Light-Az.otf")
+    SofiaPro_300Light: require("../assets/fonts/Sofia-Pro-Light-Az.otf"),
   });
 
   useEffect(() => {
@@ -37,9 +33,9 @@ function Wrapper({ children }: PropsWithChildren) {
   }
 
   return (
-    <ThemeProvider value={colorScheme === "dark" ? DarkTheme : DefaultTheme}>
+    <GluestackUIProvider config={extendedThemeConfig}>
       {children}
-    </ThemeProvider>
+    </GluestackUIProvider>
   );
 }
 
