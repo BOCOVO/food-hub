@@ -23,7 +23,19 @@ const custom = {
       gray80: "#A8ACB9",
       gray50: "#C4C7D0",
       gray20: "#EBEBEB",
+      // An means anonymous color, colors that used in the Figma
+      // but not defined in the design system
+      grayAn1: "#C4C4C4",
+      grayAn2: "#D0D2D1",
     },
+    fonts: {
+      heading: "SofiaPro",
+      body: "SofiaPro",
+      mono: "SofiaPro",
+    },
+  },
+  globalStyle: {
+    fontFamily: "SofiaPro",
   },
 };
 
