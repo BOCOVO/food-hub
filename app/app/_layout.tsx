@@ -5,8 +5,13 @@ import { PropsWithChildren, useEffect } from "react";
 import Constants from "expo-constants";
 import "react-native-reanimated";
 
-import { GluestackUIProvider } from "@gluestack-ui/themed";
+// avoid this error https://github.com/uuidjs/uuid#getrandomvalues-not-supported
+// when using medusa react package
+import "react-native-get-random-values";
+
+import { Box, GluestackUIProvider } from "@gluestack-ui/themed";
 import { extendedThemeConfig } from "@/theme/gluestack-ui.config";
+import MedusaProvider from "@/components/providers/MedusaProvider";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -34,13 +39,15 @@ function Wrapper({ children }: PropsWithChildren) {
 
   return (
     <GluestackUIProvider config={extendedThemeConfig}>
-      {children}
+      <Box flex={1} backgroundColor="$white">
+        <MedusaProvider>{children}</MedusaProvider>
+      </Box>
     </GluestackUIProvider>
   );
 }
 
 const AppContent = () => {
-  return <Stack />;
+  return <Stack screenOptions={{ headerShown: false }} />;
 };
 
 // Default to rendering your app
