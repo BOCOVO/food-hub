@@ -5,10 +5,5 @@
   "main": "index.js",
   "repository": "https://github.com/BOCOVO/food-hub",
   "author": "Juste Bocovo",
-  "license": "MIT",
-  "private": true,
-  "workspaces": [
-    "app",
-    "backend"
-  ]
+  "license": "MIT"
 }
