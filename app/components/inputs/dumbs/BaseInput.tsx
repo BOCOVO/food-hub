@@ -10,6 +10,8 @@ export interface BaseInputProps extends InputWrapperProps {
   placeholder?: string;
   icon: ReactNode;
   type?: ComponentProps<typeof InputField>["type"];
+  inputMode?: ComponentProps<typeof InputField>["inputMode"];
+  autoComplete?: ComponentProps<typeof InputField>["autoComplete"];
 }
 
 const BaseInput = ({
@@ -18,6 +20,8 @@ const BaseInput = ({
   placeholder,
   icon,
   type = "text",
+  inputMode,
+  autoComplete,
   ...wrapperProps
 }: BaseInputProps) => {
   return (
@@ -47,6 +51,8 @@ const BaseInput = ({
             value={value}
             fontSize={17}
             placeholder={placeholder}
+            inputMode={inputMode}
+            autoComplete={autoComplete}
           />
 
           {icon}
