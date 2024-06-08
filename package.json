@@ -1,0 +1,13 @@
+{
+  "name": "food-hub",
+  "version": "1.0.0",
+  "description": "A food delivery app",
+  "main": "index.js",
+  "repository": "https://github.com/BOCOVO/food-hub",
+  "author": "Juste Bocovo",
+  "license": "MIT",
+  "private": true,
+  "workspaces": [
+    "./*"
+  ]
+}
