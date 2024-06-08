@@ -1,0 +1,81 @@
+name: Deploy Medusa APP
+
+env:
+  SERVER_USERNAME_AND_HOST: ${{ secrets.SERVER_USERNAME_AND_HOST }}
+
+on:
+  workflow_call:
+    inputs:
+      DOKKU_APP_NAME:
+        required: true
+        type: string
+      DATABASE_TYPE:
+        required: true
+        type: string
+      STORE_CORS:
+        required: true
+        type: string
+      APP_NAME:
+        required: true
+        type: string
+    secrets:
+      remote_server_ssh_key:
+        required: true     
+      remote_server_host:
+        required: true
+      DATABASE_URL:
+        required: true
+      REDIS_URL:
+        required: true
+      JWT_SECRET:
+        required: true
+      COOKIE_SECRET:
+        required: true
+      SERVER_USERNAME_AND_HOST:
+        required: true
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Install SSH key
+        uses: shimataro/ssh-key-action@v2.5.0
+        with:
+          key: ${{ secrets.remote_server_ssh_key }}
+          known_hosts: ${{ secrets.remote_server_host }}
+
+      - name: Build medusa docker image
+        working-directory: ./backend
+        run: |
+          echo DATABASE_NAME=${{ secrets.DATABASE_NAME }} >> .env
+          echo DATABASE_USERNAME=${{ secrets.DATABASE_USERNAME }} >> .env
+          echo DATABASE_PORT=${{ secrets.DATABASE_PORT }} >> .env
+          echo DATABASE_PASSWORD=${{ secrets.DATABASE_PASSWORD }} >> .env
+          echo DATABASE_HOST=${{ secrets.DATABASE_HOST }} >> .env
+          echo DATABASE_TYPE=${{ inputs.DATABASE_TYPE }} >> .env
+
+          echo REDIS_URL=${{ secrets.REDIS_URL }} >> .env
+
+          echo JWT_SECRET=${{ secrets.JWT_SECRET }} >> .env
+          echo COOKIE_SECRET=${{ secrets.COOKIE_SECRET }} >> .env
+
+          echo STORE_CORS=${{ inputs.STORE_CORS }} >> .env
+
+          docker build -t dokku/${{inputs.DOKKU_APP_NAME}}:latest -f Dockerfile.prod .
+
+      - name: Push medusa image to remote dokku
+        run: |
+          docker save dokku/${{inputs.DOKKU_APP_NAME}}:latest | gzip | ssh -o StrictHostKeyChecking=no "$SERVER_USERNAME_AND_HOST" "gzip -d | docker load -q"
+
+      - name: Deploy medusa image on dokku
+        run: |
+          ssh -o StrictHostKeyChecking=no "$SERVER_USERNAME_AND_HOST" "dokku ps:rebuild ${{inputs.DOKKU_APP_NAME}} || dokku git:from-image ${{inputs.DOKKU_APP_NAME}} dokku/${{inputs.DOKKU_APP_NAME}}:latest"
+
+      - name: Clean unused container and image
+        run: |
+          ssh -o StrictHostKeyChecking=no "$SERVER_USERNAME_AND_HOST" "docker system prune -f;"

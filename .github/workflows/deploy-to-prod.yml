@@ -1,0 +1,40 @@
+name: Deploy to production environnement
+
+on:
+  push:
+    branches:
+      - "main"
+
+jobs:
+  # check changes job
+  changes:
+    runs-on: ubuntu-latest
+    outputs:
+      backend: ${{ steps.filter.outputs.backend }}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: dorny/paths-filter@v2
+        id: filter
+        with:
+          base: "main"
+          filters: |
+            backend:
+                - 'backend/**'
+
+  medusa:
+    needs: changes
+    if: ${{ needs.changes.outputs.backend == 'true' }}
+    uses: ./.github/workflows/deploy-medusa.yml
+    with:
+      DATABASE_TYPE: ${{ vars.PROD_MEDUSA_DATABASE_TYPE }}
+      DOKKU_APP_NAME: ${{ vars.PROD_MEDUSA_APP_NAME }}
+      STORE_CORS: ${{ vars.PROD_MEDUSA_STORE_HOST }}
+      APP_NAME: ${{ vars.PROD_MEDUSA_APP_NAME }}
+    secrets:
+      REDIS_URL: ${{ secrets.PROD_MEDUSA_REDIS_URL }}
+      DATABASE_URL: ${{ secrets.PROD_MEDUSA_DATABASE_URL }}
+      COOKIE_SECRET: ${{ secrets.PROD_MEDUSA_COOKIE_SECRET }}
+      JWT_SECRET: ${{ secrets.PROD_MEDUSA_JWT_SECRET }}
+      SERVER_USERNAME_AND_HOST: ${{ secrets.PROD_SERVER_USERNAME_AND_HOST }}
+      remote_server_ssh_key: ${{ secrets.PROD_SERVER_SSH_PRIVATE_KEY }}
+      remote_server_host: ${{ secrets.PROD_SERVER_HOST }}
