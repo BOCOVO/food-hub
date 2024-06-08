@@ -16,9 +16,14 @@ import { useColorScheme } from "@/hooks/useColorScheme";
 SplashScreen.preventAutoHideAsync();
 
 function Wrapper({ children }: PropsWithChildren) {
-  const colorScheme = useColorScheme();
   const [loaded] = useFonts({
-    SpaceMono: require("../assets/fonts/SpaceMono-Regular.ttf"),
+    SofiaPro: require("../assets/fonts/Sofia-Pro-Regular-Az.otf"),
+    SofiaPro_400Regular: require("../assets/fonts/Sofia-Pro-Regular-Az.otf"),
+    SofiaPro_500Medium: require("../assets/fonts/Sofia-Pro-Medium-Az.otf"),
+    SofiaPro_700Bold: require("../assets/fonts/Sofia-Pro-Bold-Az.otf"),
+    SofiaPro_600SemiBold: require("../assets/fonts/Sofia-Pro-Semi-Bold-Az.otf"),
+    SofiaPro_900Black: require("../assets/fonts/Sofia-Pro-Black-Az.otf"),
+    SofiaPro_300Light: require("../assets/fonts/Sofia-Pro-Light-Az.otf")
   });
 
   useEffect(() => {
