@@ -33,7 +33,7 @@ const InputWrapper = ({
   label,
 }: InputWrapperProps) => {
   return (
-    <Box h="$32" w="100%">
+    <Box pb="$6" w="100%">
       <FormControl
         size="md"
         isDisabled={isDisabled}
