@@ -12,6 +12,7 @@ import "react-native-get-random-values";
 import { Box, GluestackUIProvider } from "@gluestack-ui/themed";
 import { extendedThemeConfig } from "@/theme/gluestack-ui.config";
 import MedusaProvider from "@/components/providers/MedusaProvider";
+import ToastCreator from "@/components/toast/ToastCreator";
 
 // Prevent the splash screen from auto-hiding before asset loading is complete.
 SplashScreen.preventAutoHideAsync();
@@ -40,6 +41,7 @@ function Wrapper({ children }: PropsWithChildren) {
   return (
     <GluestackUIProvider config={extendedThemeConfig}>
       <Box flex={1} backgroundColor="$white">
+        <ToastCreator />
         <MedusaProvider>{children}</MedusaProvider>
       </Box>
     </GluestackUIProvider>
