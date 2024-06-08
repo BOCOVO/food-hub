@@ -8,7 +8,7 @@ export interface BaseInputProps extends InputWrapperProps {
   value?: string;
   onChange?: (value: string) => void;
   placeholder?: string;
-  icon: ReactNode;
+  icon?: ReactNode;
   type?: ComponentProps<typeof InputField>["type"];
   inputMode?: ComponentProps<typeof InputField>["inputMode"];
   autoComplete?: ComponentProps<typeof InputField>["autoComplete"];
