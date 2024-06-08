@@ -35,6 +35,7 @@ const BaseInput = ({
     >
       <InputWrapper {...wrapperProps}>
         <Input
+          h={65}
           $focus-borderColor="$primary"
           backgroundColor="$white"
           borderRadius={10}
@@ -53,6 +54,7 @@ const BaseInput = ({
             placeholder={placeholder}
             inputMode={inputMode}
             autoComplete={autoComplete}
+            onChangeText={onChange}
           />
 
           {icon}

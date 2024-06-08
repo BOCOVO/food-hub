@@ -25,6 +25,7 @@ const PasswordInput = (props: PasswordInputProps) => {
         <InputSlot pr="$3" onPress={handleState}>
           <InputIcon
             as={showPassword ? EyeIcon : EyeOffIcon}
+            size="xl"
             color="$grayAn2"
           />
         </InputSlot>
