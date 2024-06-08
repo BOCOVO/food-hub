@@ -7,7 +7,8 @@ import {
   InputSlot,
 } from "@gluestack-ui/themed";
 
-interface PasswordInputProps extends Omit<BaseInputProps, "type" | "icon"> {}
+export interface PasswordInputProps
+  extends Omit<BaseInputProps, "type" | "icon"> {}
 
 const PasswordInput = (props: PasswordInputProps) => {
   const [showPassword, setShowPassword] = useState(false);

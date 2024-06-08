@@ -11,7 +11,7 @@ export default {
     label: "Label",
     isRequired: true,
     placeholder: "Enter your name",
-    value: "John Doe",
+    inputMode: "email",
   },
 } as Meta<typeof TextInput>;
 
