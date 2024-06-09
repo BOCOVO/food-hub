@@ -4,20 +4,32 @@ import TextInput from "../inputs/TextInput";
 import PasswordInput from "../inputs/PasswordInput";
 import PrimarySolidButton from "../buttons/PrimarySolidButton";
 import { loginValidationSchema } from "@/utils/validationSchema";
+import { useLogin } from "@/hooks/useLogin";
+import { router } from "expo-router";
+import { ROUTES } from "@/constants/routes";
 
-interface FormValue {
-  email?: string;
-  password?: string;
+export interface LoginFormValue {
+  email: string;
+  password: string;
 }
 
 const LoginForm = () => {
+  const { login } = useLogin();
+
+  const handleLogin: typeof login = async (...params) => {
+    try {
+      await login(...params);
+      router.replace(ROUTES.HOME);
+    } catch (_) {}
+  };
+
   return (
-    <Formik<FormValue>
+    <Formik<LoginFormValue>
       initialValues={{ email: "", password: "" }}
-      onSubmit={() => {}}
+      onSubmit={handleLogin}
       validationSchema={loginValidationSchema}
     >
-      {({ handleSubmit }) => (
+      {({ handleSubmit, isSubmitting }) => (
         <Box mt="$10">
           <TextInput
             label="E-mail"
@@ -41,6 +53,7 @@ const LoginForm = () => {
             alignSelf="center"
             label="Login"
             width="70%"
+            isLoading={isSubmitting}
             onPress={() => {
               handleSubmit();
             }}
