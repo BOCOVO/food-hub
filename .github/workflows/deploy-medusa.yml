@@ -33,6 +33,13 @@ on:
         required: true
       SERVER_USERNAME_AND_HOST:
         required: true
+      CLOUDINARY_CLOUD_NAME:
+        required: true
+      CLOUDINARY_API_KEY:
+        required: true
+      CLOUDINARY_API_SECRET:
+        required: true
+
 
 jobs:
   deploy:
@@ -65,6 +72,11 @@ jobs:
           echo COOKIE_SECRET=${{ secrets.COOKIE_SECRET }} >> .env
 
           echo STORE_CORS=${{ inputs.STORE_CORS }} >> .env
+
+          echo CLOUDINARY_CLOUD_NAME=${{ secrets.CLOUDINARY_CLOUD_NAME }} >> .env
+          echo CLOUDINARY_API_KEY=${{ secrets.CLOUDINARY_API_KEY }} >> .env
+          echo CLOUDINARY_API_SECRET=${{ secrets.CLOUDINARY_API_SECRET }} >> .env
+
 
           docker build -t dokku/${{inputs.DOKKU_APP_NAME}}:latest -f Dockerfile.prod .
 

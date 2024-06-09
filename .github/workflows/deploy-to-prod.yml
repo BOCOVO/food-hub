@@ -38,3 +38,6 @@ jobs:
       SERVER_USERNAME_AND_HOST: ${{ secrets.PROD_SERVER_USERNAME_AND_HOST }}
       remote_server_ssh_key: ${{ secrets.PROD_SERVER_SSH_PRIVATE_KEY }}
       remote_server_host: ${{ secrets.PROD_SERVER_HOST }}
+      CLOUDINARY_API_KEY: ${{ secrets.PROD_CLOUDINARY_API_KEY }}
+      CLOUDINARY_API_SECRET: ${{ secrets.PROD_CLOUDINARY_API_SECRET }}
+      CLOUDINARY_CLOUD_NAME: ${{ secrets.PROD_CLOUDINARY_CLOUD_NAME }}
