@@ -1,15 +1,18 @@
 import { Box, Button, ButtonText } from "@gluestack-ui/themed";
 import { ComponentProps, ReactNode } from "react";
 import { Text } from "../core/Text";
+import { ButtonSpinner } from "@gluestack-ui/themed";
 
 interface PrimarySolidButtonProps extends ComponentProps<typeof Button> {
   label: string;
   icon?: ReactNode;
+  isLoading?: boolean;
 }
 
 const PrimarySolidButton = ({
   icon,
   label,
+  isLoading,
   ...restOptions
 }: PrimarySolidButtonProps) => {
   return (
@@ -46,6 +49,8 @@ const PrimarySolidButton = ({
           {label}
         </Text>
       </ButtonText>
+
+      {isLoading ? <ButtonSpinner marginRight="$3" /> : null}
     </Button>
   );
 };
