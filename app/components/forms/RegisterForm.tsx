@@ -4,12 +4,14 @@ import TextInput from "../inputs/TextInput";
 import PasswordInput from "../inputs/PasswordInput";
 import PrimarySolidButton from "../buttons/PrimarySolidButton";
 import { registerValidationSchema } from "@/utils/validationSchema";
-import { useMedusa } from "medusa-react";
+import { router } from "expo-router";
+import { ROUTES } from "@/constants/routes";
+import { useRegister } from "@/hooks/useRegister";
 
-interface FormValue {
+export interface RegisterFormValue {
+  email?: string;
   firstName?: string;
   lastName?: string;
-  email?: string;
   password?: string;
 }
 
@@ -21,34 +23,26 @@ const defaultFormValue = {
 };
 
 const RegisterForm = () => {
-  const { client } = useMedusa();
-
-  const register = async ({
-    email,
-    firstName,
-    lastName,
-    password,
-  }: Required<FormValue>) => {
-    console.log("creating user");
+  const { register } = useRegister();
+  const handlerRegister: typeof register = async (...params) => {
     try {
-      await client.customers.create({
-        email,
-        password,
-        first_name: firstName,
-        last_name: lastName,
-      });
-    } catch (error) {
-      console.log(error);
+      await register(...params);
+
+      router.replace(ROUTES.HOME);
+    } catch (_) {
+      // do nothing else, error already handled by register
     }
   };
 
   return (
-    <Formik<FormValue>
+    <Formik<RegisterFormValue>
       initialValues={defaultFormValue}
-      onSubmit={(inputs) => register(inputs as Required<FormValue>)}
+      onSubmit={(inputs, helper) =>
+        handlerRegister(inputs as Required<RegisterFormValue>, helper)
+      }
       validationSchema={registerValidationSchema}
     >
-      {({ handleSubmit }) => (
+      {({ handleSubmit, isSubmitting }) => (
         <Box mt="$10">
           <TextInput
             label="First Name"
@@ -88,6 +82,7 @@ const RegisterForm = () => {
             alignSelf="center"
             label="Sign Up"
             width="70%"
+            isLoading={isSubmitting}
             onPress={() => {
               handleSubmit();
             }}
