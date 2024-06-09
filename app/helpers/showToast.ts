@@ -4,3 +4,15 @@ import toastEmitter, { TOAST_EMITTER_EVENT_NAME } from "./emitters";
 export const showToast = (toastConfig: ToastConfig) => {
   toastEmitter.emit(TOAST_EMITTER_EVENT_NAME, toastConfig);
 };
+
+export const showSuccessToast = (
+  toastConfig: Pick<ToastConfig, "title" | "description">,
+) => {
+  showToast({ ...toastConfig, type: "success" });
+};
+
+export const showErrorToast = (
+  toastConfig: Pick<ToastConfig, "title" | "description">,
+) => {
+  showToast({ ...toastConfig, type: "error" });
+};
