@@ -19,11 +19,12 @@ export const useLogin = () => {
       showSuccessToast({
         description: "Welcome ! You are logged in successfully.",
       });
-    } catch (_) {
+    } catch (error) {
       showErrorToast({
         description:
           "We've encountered an error trying to connect you. Ensure that you credential is correct.",
       });
+      throw error;
     }
   };
 
