@@ -54,6 +54,7 @@ const BaseInput = ({
             placeholder={placeholder}
             inputMode={inputMode}
             autoComplete={autoComplete}
+            autoCapitalize="none"
             onChangeText={onChange}
           />
 
