@@ -19,6 +19,7 @@ const SmallCategory = ({ img, name, onPress }: SmallCategoryCard) => {
       borderRadius="$full"
       shadowOffset={{ width: 0, height: 20 }}
       shadowRadius={30}
+      elevation={30}
       $active-shadowColor="$primary"
       shadowColor="$gray"
       shadowOpacity={0.25}
