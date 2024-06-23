@@ -24,6 +24,9 @@ export const Colors = {
 
   grayAn1: "#C4C4C4",
   grayAn2: "#D0D2D1",
+  grayAn3: "#F6F6F6",
+  grayAn4: "#8A8E9B",
+  grayAn5: "#7E8392",
   inputShadow: "#D3D1D8",
   inputShadowWithAlpha: "#d3d1d8c0",
 };
